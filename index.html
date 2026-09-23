@@ -1,6 +1,415 @@
-<h1 class="aligncenter" style="color: #5e9ca0; text-align: center;"><span style="color: #00ff00;">G01rbus.exe</span></h1>
-<p> </p>
-<p><span style="color: #00ff00;">Space Cat</span></p>
-<h1 class="aligncenter" style="color: #5e9ca0; text-align: center;"> </h1>
-<h1 class="aligncenter" style="color: #5e9ca0; text-align: center;"><span style="color: #00ff00;">        </span></h1>
-<h2 style="color: #2e6c80; text-align: center;"><span style="color: #00ff00;"><strong> </strong></span></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base target="_blank">
+  <style>
+    @font-face {
+      font-family: 'Google Sans Code Variable';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 300 800;
+      src: url(https://cdn.jsdelivr.net/fontsource/fonts/google-sans-code:vf@5.3.0/latin-wght-normal.woff2) format('woff2-variations');
+    }
+
+    * {
+      font-family: 'Google Sans Code Variable', 'Google Sans Code', monospace;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #000 0%, #032703 15%, #096609 50%, #032703 70%, #000 100%);
+      background-attachment: fixed;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-y: auto;
+    }
+
+    a {
+      color: #a8ffa8;
+      font-weight: bold;
+    }
+
+    .social {
+      color: #33ff33 !important; 
+      text-decoration: none;
+    }
+
+    .green-glow {
+      filter: drop-shadow(0 0 15px rgba(41, 202, 41, 0.75)) drop-shadow(0 0 20px rgba(51, 255, 51, 0.4)) !important;
+    }
+
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      justify-content: space-around;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    #matrix-bg p { 
+      line-height: 1; 
+      margin: 0; 
+    }
+    
+    #matrix-bg span {
+      display: block;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      line-height: 1;
+      color: rgba(155, 255, 155, 0.08);
+      text-align: center;
+      will-change: color, text-shadow;
+    }
+
+    #matrix-bg .head-char {
+      color: #9bff9b !important;
+      text-shadow: 0 0 0.4em #fff !important;
+    }
+
+    #matrix-bg .trail-char {
+      color: #00ff00 !important;
+      text-shadow: none !important;
+    }
+
+    #content {
+      position: relative;
+      z-index: 1;
+      width: min(90vw, 600px);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      color: #fff;
+      padding: 2rem 0;
+      margin: 0 auto;
+    }
+
+    .box {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .box-1 {
+      aspect-ratio: 1 / 1;
+      max-height: 45vh;
+      perspective: 1000px;
+    }
+
+    .box-1 img {
+      width: 100%;
+    }
+
+    .box-2 {
+      aspect-ratio: 30 / 9;
+      margin-top: -80px;
+    }
+
+    .card-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      background: rgba(0, 0, 0, 0.486);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(51, 255, 51, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(51, 255, 51, 0.05);
+      padding: 1.5rem;
+      border-radius: 16px;
+      color: #33ff33;
+      font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+      line-height: 1.8;
+    }
+
+    .card-details p {
+      margin: 0.25rem 0;
+      white-space: nowrap;
+    }
+
+    .label {
+      color: #33ff33;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 5px rgba(51, 255, 51, 0.4);
+    }
+
+    .val {
+      color: #b3ffb3;
+      margin-left: 0.5rem;
+    }
+
+    .paw-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 1rem;
+      width: stretch;
+    }
+
+    .paw-label {
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px rgba(51, 255, 51, 0.4);
+    }
+
+    .paw-icon {
+      width: clamp(60px, 12vw, 250px);
+      height: clamp(60px, 12vw, 200px);
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px rgba(51, 255, 51, 0.6));
+    }
+
+    .floating-img {
+      animation: floating 4s ease-in-out infinite;
+      will-change: transform;
+      object-fit: contain !important;
+      transition: transform 0.15s ease-out; 
+    }
+
+    .no-background {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .no-background span {
+      display: inline-block;
+      vertical-align: baseline;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .no-background span:before, 
+    .no-background span:after {
+      content: '';
+      display: block;
+      width: 1000px;
+      position: absolute;
+      top: 0.73em;
+      border-top: 1px solid rgb(14, 240, 52);
+      box-shadow: 0 0 8px rgba(14, 240, 52, 0.9), 0 0 16px rgba(14, 240, 52, 0.5);
+      filter: drop-shadow(0 0 6px rgba(14, 240, 52, 0.8));
+    }
+
+    .no-background span:before { right: 100%; }
+    .no-background span:after { left: 100%; }
+
+    .blink-symbol {
+      display: inline-block;
+      animation: smooth-glow-blink 2s ease-in-out infinite;
+    }
+
+    /* glow green */
+    @keyframes smooth-glow-blink {
+      0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 6px rgba(51, 255, 51, 0.8));
+      }
+      50% {
+        opacity: 0.2;
+        filter: drop-shadow(0 0 1px rgba(51, 255, 51, 0.1));
+      }
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(5px); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    @media (max-width: 480px) {
+      .card-info {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: left;
+      }
+      
+      .card-details {
+        width: 100%;
+      }
+
+      .paw-section {
+        padding-left: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .floating-img { animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="matrix-bg"></div>
+
+<main id="content">
+  <!-- GLORBUS FINAL CONCEPT ART -->
+  <div class="box box-1">
+    <img src="cat.png" alt="" class="floating-img green-glow">
+  </div>
+
+  <!-- GLORBUS TITRE -->
+  <div class="box box-2">
+    <img src="titre.png" alt="">
+  </div>
+
+  <!-- INFO DETAILS -->
+  <div class="box box-3 card-info">
+    <div class="card-details">
+      <p><span class="label"><span class="blink-symbol">&gt;</span> SERIAL NUMBER:</span> <span class="val">2000</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> GALAXY:</span> <span class="val">@Nyahgrem</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> PLANET:</span> <span class="val">@BeccaPix</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> DATE OF BIRTH:</span> <span class="val">**.**.2042</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> GENDER:</span> <span class="val">Binary</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> AGE:</span> <span class="val">??</span></p>
+      <p><span class="label"><span class="blink-symbol">&gt;</span> BREED:</span> <span class="val">Undetermined [Cat...?]</span></p>
+    </div>
+    
+    <div class="paw-section">
+      <span class="paw-label"><span class="blink-symbol">&gt;</span> PAW PRINT:</span>
+      <img src="cat paw2.png" alt="Paw Print" class="paw-icon">
+    </div>
+  </div>
+
+  <div class="box card-info" style="background: rgba(0, 0, 0, 0.79); justify-content: center; backdrop-filter: blur(4px) !important;">
+    <div style="text-align: center !important">
+      <p class="val no-background"><span>Zello Alien!</span></p>
+
+      <p>Congratulations on obtaining the one and only,</p>
+      <p><span class="label">G10rbus 2000!</span></p>
+      <br/>
+      <p>BeccaPix here~ I hope you will cherish and take care of him! 💚</p>
+      <p>I am so happy to have been able to participate<br/> to such a project thanks to <a href="https://www.instagram.com/nyahgrem/">&lt;Nyahgrem&gt;</a>.</p>
+      <p>and thanks to you for being <br/>part of the project and help the cats!</p>
+      <br/>
+
+      <p><span class="label"><span class="blink-symbol">/!\</span> IMPORTANT WARNING</span></p>
+      <p><span class="val">G10rbus Electronic LED system is EXTREMELY FRAGILE.</span></p>
+      <p><span class="val">He went throught a lot...</span></p>
+      <p><span class="val">It is recommended to -not- move the mouse cable to the front and keep it towards behind G10RBUS.</span></p>
+      <br/>
+
+      <p><span class="val">Curious about how your G10rbus-2000 came to life?</span></p>
+
+      <a href="https://www.instagram.com/reel/DdUznHGKKj9/" class="social">
+        <span class="blink-symbol">&lt;</span>INSTAGRAM<span class="blink-symbol">&gt;</span>
+      </a>
+      <a href="https://www.tiktok.com/@beccapix/video/7685893942684044577" class="social">
+        <span class="blink-symbol">&lt;</span>TIKTOK<span class="blink-symbol">&gt;</span>
+      </a>
+      <a href="https://www.youtube.com/shorts/Y9PbCV4iLkQ" class="social">
+        <span class="blink-symbol">&lt;</span>YOUTUBE<span class="blink-symbol">&gt;</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Mouse movment
+  var catImg = document.querySelector('.floating-img');
+  if (catImg) {
+    window.addEventListener('mousetomove', function(e) {
+      var x = (e.clientX / window.innerWidth - 0.5) * 20;
+      var y = (e.clientY / window.innerHeight - 0.5) * 20;
+      catImg.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0)';
+    });
+
+    window.addEventListener('mousetoleave', function() {
+      catImg.style.transform = 'translate3d(0, 0, 0)';
+    });
+  }
+
+  // Binary flow for the background
+  var matrixBox = document.getElementById('matrix-bg');
+  var chars = ['0','1'];
+
+  function getRandomChar() {
+    return chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  function animateColumn(spans) {
+    var head = Math.floor(Math.random() * spans.length);
+    var speed = Math.floor(Math.random() * 50) + 40;
+
+    setInterval(function() {
+      for (var i = 0; i < spans.length; i++) {
+        spans[i].className = '';
+      }
+
+      if (spans[head]) {
+        spans[head].textContent = getRandomChar();
+        spans[head].className = 'head-char';
+      }
+
+      var prev = head - 1;
+      if (prev < 0) prev = spans.length - 1;
+      
+      if (spans[prev]) {
+        spans[prev].className = 'trail-char';
+      }
+
+      head = (head + 1) % spans.length;
+    }, speed);
+  }
+
+  function setupMatrix() {
+    matrixBox.innerHTML = '';
+    var totalCols = Math.min(Math.floor(window.innerWidth / 20), 40);
+    var totalRows = Math.ceil(window.innerHeight / 20) + 2;
+
+    for (var c = 0; c < totalCols; c++) {
+      var col = document.createElement('p');
+      var spans = [];
+
+      for (var r = 0; r < totalRows; r++) {
+        var s = document.createElement('span');
+        s.textContent = getRandomChar();
+        col.appendChild(s);
+        spans.push(s);
+      }
+
+      matrixBox.appendChild(col);
+      animateColumn(spans);
+    }
+  }
+
+  setupMatrix();
+
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(setupMatrix, 250);
+  });
+</script>
+</body>
+</html>
